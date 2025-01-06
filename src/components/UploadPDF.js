@@ -14,10 +14,8 @@ const UploadPDF = () => {
     formData.append('pdf', pdfFile);
 
     try {
-      await axios.post('http://localhost:5000/api/upload-pdf', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      alert('PDF uploaded successfully!');
+      const response = await axios.post('http://localhost:5000/api/upload-pdf', formData);
+      alert(response.data.message);
     } catch (error) {
       console.error(error);
       alert('Error uploading PDF.');
@@ -25,10 +23,10 @@ const UploadPDF = () => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h2>Upload PDF</h2>
       <input type="file" accept="application/pdf" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload PDF</button>
+      <button onClick={handleUpload}>Upload</button>
     </div>
   );
 };
