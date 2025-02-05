@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 
 export const metadata = {
@@ -18,7 +19,7 @@ export default function SignIn() {
             </h1>
           </div>
           {/* Contact form */}
-          <form className="mx-auto max-w-[400px]">
+          <form className="mx-auto max-w-[400px]" onSubmit={handleSubmit}>
             <div className="space-y-5">
               <div>
                 <label
@@ -64,8 +65,12 @@ export default function SignIn() {
               <div className="flex items-center gap-3 text-center text-sm italic text-gray-600 before:h-px before:flex-1 before:bg-gradient-to-r before:from-transparent before:via-gray-400/25 after:h-px after:flex-1 after:bg-gradient-to-r after:from-transparent after:via-gray-400/25">
                 or
               </div>
-              <button className="btn relative w-full bg-gradient-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,theme(colors.gray.800),theme(colors.gray.700),theme(colors.gray.800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]">
-                Sign In with Google
+              <button 
+                type="button"
+                className="w-full rounded-md bg-indigo-600 p-2 text-white"
+                onClick={() => signIn("google")}
+              >
+                Sign in with Google
               </button>
             </div>
           </form>
@@ -80,4 +85,12 @@ export default function SignIn() {
       </div>
     </section>
   );
+}
+
+function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const email = formData.get("email");
+  const twoFaCode = formData.get("twoFaCode");
+  // Validate and send to server for 2FA check, e.g., await signIn('credentials', { email, twoFaCode });
 }
