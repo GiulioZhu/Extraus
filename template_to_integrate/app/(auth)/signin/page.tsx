@@ -1,9 +1,10 @@
+import Link from "next/link";
+
+
 export const metadata = {
   title: "Sign In - Open PRO",
   description: "Page description",
 };
-
-import Link from "next/link";
 
 export default function SignIn() {
   return (
